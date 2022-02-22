@@ -26,13 +26,19 @@ class Cafe(db.Model):
 @app.route('/')
 def home():
     all_cafes = db.session.query(Cafe).all()
-    return render_template('index2.html', cafe_list=all_cafes)
+    return render_template('index.html', cafe_list=all_cafes)
 
 
-all_cafes = db.session.query(Cafe).all()
-for cafe in all_cafes:
-    print(cafe.name)
+@app.route('/cafe/<int:cafe_id>')
+def show_cafe(cafe_id):
+    requested_cafe = db.session.query(Cafe).get(cafe_id)
+    return render_template('cafe.html', cafe=requested_cafe)
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
-#     # app.run()
+
+# all_cafes = db.session.query(Cafe).all()
+# for cafe in all_cafes:
+#     print(cafe.has_sockets)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    # app.run()
