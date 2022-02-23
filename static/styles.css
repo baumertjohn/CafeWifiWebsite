@@ -1,0 +1,17 @@
+.navbar {
+  margin-bottom: 25px;
+}
+
+.footer {
+  margin: 50px 0px 0px;
+  text-align: center;
+  padding: 15px;
+}
+
+.fa-check {
+  color: green;
+}
+
+.fa-xmark {
+  color: red;
+}

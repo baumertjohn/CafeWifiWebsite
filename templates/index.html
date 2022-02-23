@@ -1,71 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include "header.html" %}
+<!-- Page Header -->
+<div style="width:90%; margin:0 auto; text-align:center;">
+    <!-- Nav Bar -->
+    <div class="container-fluid">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/c3b1db97d2.js" crossorigin="anonymous"></script>
-    <title>Cafe Test</title>
-</head>
-
-<body>
-    <div style="width:90%; margin:0 auto; text-align:center;">
-        <!-- Nav Bar -->
-        <div class="container-fluid">
-
-            <!-- Cafe list -->
-            <div class="card-columns">
-                <!-- <div class="row"> -->
-                {% for cafe in cafe_list %}
-                <!-- <div class="card-deck col-lg-4 col-md-6"> -->
-                <div class="card border-dark">
-                    <div class="card-header">
-                        <h5>{{ cafe.name }}</h5>
-                    </div>
-                    <img class="card-img-top img-thumbnail" src="{{cafe.img_url}}" alt="No Image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ cafe.location }}</h5>
-                        <div class="card-text">
-                            {% if cafe.has_sockets == True %}
-                            <i class="fa-solid fa-plug"></i>
-                            {% endif %}
-                            {% if cafe.has_toilet == True %}
-                            <i class="fa-solid fa-toilet"></i>
-                            {% endif %}
-                            {% if cafe.has_wifi == True %}
-                            <i class="fa-solid fa-wifi"></i>
-                            {% endif %}
-                            {% if cafe.can_take_calls %}
-                            <i class="fa-solid fa-phone"></i>
-                            {% endif %}
-                        </div>
-                        <div class="card-footer"><a href="{{url_for('show_cafe', cafe_id=cafe.id)}}"
-                                class="btn btn-primary">More Info</a></div>
-                    </div>
+        <!-- Cafe list -->
+        <div class="card-columns">
+            <!-- <div class="row"> -->
+            {% for cafe in cafe_list %}
+            <!-- <div class="card-deck col-lg-4 col-md-6"> -->
+            <div class="card border-dark">
+                <div class="card-header">
+                    <h5>{{ cafe.name }}</h5>
                 </div>
-                <!-- </div> -->
-                {% endfor %}
-                <!-- </div> -->
+                <img class="card-img-top img-thumbnail" src="{{cafe.img_url}}" alt="No Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ cafe.location }}</h5>
+                    <div class="card-text">
+                        {% if cafe.has_sockets == True %}
+                        <i class="fa-solid fa-plug"></i>
+                        {% endif %}
+                        {% if cafe.has_toilet == True %}
+                        <i class="fa-solid fa-toilet"></i>
+                        {% endif %}
+                        {% if cafe.has_wifi == True %}
+                        <i class="fa-solid fa-wifi"></i>
+                        {% endif %}
+                        {% if cafe.can_take_calls %}
+                        <i class="fa-solid fa-phone"></i>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer"><a href="{{url_for('show_cafe', cafe_id=cafe.id)}}"
+                            class="btn btn-primary">More Info</a></div>
+                </div>
             </div>
+            <!-- </div> -->
+            {% endfor %}
+            <!-- </div> -->
         </div>
     </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+</div>
+<div style="padding: 25px; text-align: center;">
+    <a href="#" class="btn btn-primary">Add a New Cafe</a>
+</div>
+{% include "footer.html" %}

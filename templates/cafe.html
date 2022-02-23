@@ -1,58 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/c3b1db97d2.js" crossorigin="anonymous"></script>
-    <title>Cafe Details</title>
-</head>
-
-<body>
-    <div style="width:50%; margin:0 auto; text-align:center;">
-        <div>
-            <img src="{{cafe.img_url}}" class="img-fluid" alt="No Image">
-        </div>
-
-        <h3>{{cafe.name}}</h3>
-        <h4>{{cafe.location}}</h4>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Outlets Available - {{cafe.has_sockets}}</li>
-            <li class="list-group-item">Restrooms - {{cafe.has_toilet}}</li>
-            <li class="list-group-item">Wifi Connection - {{cafe.has_wifi}}</li>
-            <li class="list-group-item">Can Take Calls - {{cafe.can_take_calls}}</li>
-            <li class="list-group-item">Number of Seats - {{cafe.seats}}</li>
-            <li class="list-group-item">Price of Coffee - {{cafe.coffee_price}}</li>
-            <li class="list-group-item"><a href="{{cafe.map_url}}" target="_blank" class="btn btn-primary">Map Link</a>
-            </li>
-        </ul>
-
-
-
-
-
-
-
+{% include "header.html" %}
+<!-- Page Header -->
+<div style="width:50%; margin:0 auto; text-align:center;">
+    <div style="padding-bottom: 20px;">
+        <img src="{{cafe.img_url}}" class="img-fluid" alt="No Image">
     </div>
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+    <h3>{{cafe.name}}</h3>
+    <h4>{{cafe.location}}</h4>
+    <ul class="list-group list-group-flush">
+        {% if cafe.has_sockets == True %}
+        {% set status = 'fa-check' %}
+        {% else %}
+        {% set status = 'fa-xmark' %}
+        {% endif %}
+        <li class="list-group-item">Outlets Available - <i class="fa-solid {{ status }}"></i></i></li>
+        
+        {% if cafe.has_toilet == True %}
+        {% set status = 'fa-check' %}
+        {% else %}
+        {% set status = 'fa-xmark' %}
+        {% endif %}
+        <li class="list-group-item">Restrooms - <i class="fa-solid {{ status }}"></i></i></li>
+        
+        {% if cafe.has_wifi == True %}
+        {% set status = 'fa-check' %}
+        {% else %}
+        {% set status = 'fa-xmark' %}
+        {% endif %}
+        <li class="list-group-item">Wifi Connection - <i class="fa-solid {{ status }}"></i></i></li>
+        
+        {% if cafe.can_take_calls == True %}
+        {% set status = 'fa-check' %}
+        {% else %}
+        {% set status = 'fa-xmark' %}
+        {% endif %}
+        <li class="list-group-item">Can Take Calls - <i class="fa-solid {{ status }}"></i></i></li>
+        <li class="list-group-item">Number of Seats - {{cafe.seats}}</li>
+        <li class="list-group-item">Price of Coffee - {{cafe.coffee_price}}</li>
+        <li class="list-group-item"><a href="{{cafe.map_url}}" target="_blank" class="btn btn-primary">Map Link</a>
+        </li>
+    </ul>
+</div>
+{% include "footer.html" %}
