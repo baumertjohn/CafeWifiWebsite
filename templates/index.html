@@ -1,3 +1,4 @@
+{% set title = 'Nomad Workplace Finder' %}
 {% include "header.html" %}
 <!-- Page Header -->
 <div style="width:90%; margin:0 auto; text-align:center;">
@@ -41,6 +42,6 @@
     </div>
 </div>
 <div style="padding: 25px; text-align: center;">
-    <a href="#" class="btn btn-primary">Add a New Cafe</a>
+    <a href="{{url_for('add_cafe')}}" class="btn btn-primary">Add a New Cafe</a>
 </div>
 {% include "footer.html" %}

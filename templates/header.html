@@ -11,7 +11,7 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/c3b1db97d2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css' )}}">
-    <title>Cafe Test</title>
+    <title>{{ title }}</title>
 </head>
 
 <body>
@@ -46,7 +46,8 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li> -->
             </ul>
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="{{ url_for('add_cafe') }}">Add Cafe</a>
+            <a class="nav-link" href="{{ url_for('home') }}">Home</a>
             <a class="nav-link" href="#">Log In</a>
         </div>
     </nav>

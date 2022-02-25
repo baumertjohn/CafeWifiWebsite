@@ -1,0 +1,18 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% set title = 'Add a New Cafe' %}
+{% include 'header.html' %}
+
+<div style="width:50%; margin:0 auto; text-align:center;">
+    <div class="card border-dark">
+        <div class="card-header">
+            <h1>Add a New Cafe</h1>
+        </div>
+        <div class="card-body text-dark">
+            <div style="width:50%; margin:0 auto; text-align:center;">
+                {{ wtf.quick_form(form, novalidate=True) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
