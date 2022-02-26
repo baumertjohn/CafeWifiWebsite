@@ -5,40 +5,47 @@
     <div style="padding-bottom: 20px;">
         <img src="{{cafe.img_url}}" class="img-fluid" alt="No Image">
     </div>
-    <h3>{{cafe.name}}</h3>
-    <h4>{{cafe.location}}</h4>
-    <ul class="list-group list-group-flush">
-        {% if cafe.has_sockets == True %}
-        {% set status = 'fa-check' %}
-        {% else %}
-        {% set status = 'fa-xmark' %}
-        {% endif %}
-        <li class="list-group-item">Outlets Available - <i class="fa-solid {{ status }}"></i></i></li>
-        
-        {% if cafe.has_toilet == True %}
-        {% set status = 'fa-check' %}
-        {% else %}
-        {% set status = 'fa-xmark' %}
-        {% endif %}
-        <li class="list-group-item">Restrooms - <i class="fa-solid {{ status }}"></i></i></li>
-        
-        {% if cafe.has_wifi == True %}
-        {% set status = 'fa-check' %}
-        {% else %}
-        {% set status = 'fa-xmark' %}
-        {% endif %}
-        <li class="list-group-item">Wifi Connection - <i class="fa-solid {{ status }}"></i></i></li>
-        
-        {% if cafe.can_take_calls == True %}
-        {% set status = 'fa-check' %}
-        {% else %}
-        {% set status = 'fa-xmark' %}
-        {% endif %}
-        <li class="list-group-item">Can Take Calls - <i class="fa-solid {{ status }}"></i></i></li>
-        <li class="list-group-item">Number of Seats - {{cafe.seats}}</li>
-        <li class="list-group-item">Price of Coffee - {{cafe.coffee_price}}</li>
-        <li class="list-group-item"><a href="{{cafe.map_url}}" target="_blank" class="btn btn-primary">Map Link</a>
-        </li>
-    </ul>
+    <div class="card border-dark">
+        <div class="card-header">
+            <h4>{{ cafe.name }}</h4>
+            <h5>{{ cafe.location }}</h5>
+        </div>
+        <div class="card-text">
+            <ul class="list-group list-group-flush">
+                {% if cafe.has_sockets == True %}
+                {% set status = 'fa-check' %}
+                {% else %}
+                {% set status = 'fa-xmark' %}
+                {% endif %}
+                <li class="list-group-item">Outlets Available - <i class="fa-solid {{ status }}"></i></i></li>
+
+                {% if cafe.has_toilet == True %}
+                {% set status = 'fa-check' %}
+                {% else %}
+                {% set status = 'fa-xmark' %}
+                {% endif %}
+                <li class="list-group-item">Restrooms - <i class="fa-solid {{ status }}"></i></i></li>
+
+                {% if cafe.has_wifi == True %}
+                {% set status = 'fa-check' %}
+                {% else %}
+                {% set status = 'fa-xmark' %}
+                {% endif %}
+                <li class="list-group-item">Wifi Connection - <i class="fa-solid {{ status }}"></i></i></li>
+
+                {% if cafe.can_take_calls == True %}
+                {% set status = 'fa-check' %}
+                {% else %}
+                {% set status = 'fa-xmark' %}
+                {% endif %}
+                <li class="list-group-item">Can Take Calls - <i class="fa-solid {{ status }}"></i></i></li>
+                <li class="list-group-item">Number of Seats - {{cafe.seats}}</li>
+                <li class="list-group-item">Price of Coffee - {{cafe.coffee_price}}</li>
+                <li class="list-group-item"><a href="{{cafe.map_url}}" target="_blank" class="btn btn-primary">Map
+                        Link</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 {% include "footer.html" %}

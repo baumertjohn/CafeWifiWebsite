@@ -1,9 +1,17 @@
-from flask import Flask, redirect, render_template, url_for
+# A simple cafe ammenity listing website
+# Admin user credentials are:
+# name: Admin
+# email: admin@admin.com
+# password: 12345678
+
+from flask import Flask, redirect, render_template, request, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField
 from wtforms.validators import DataRequired, URL
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 CAFE_BOOLEANS = ['YES', 'NO']
 
@@ -15,6 +23,17 @@ Bootstrap(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Added for secure login
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    email = db.Column(db.VARCHAR(100), nullable=False, unique=True)
+    password = db.Column(db.VARCHAR(100), nullable=False)
+    name = db.Column(db.VARCHAR(100), nullable=False)
 
 
 class Cafe(db.Model):
@@ -49,6 +68,12 @@ class CafeForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+# Store user ID for secure session
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
 @app.route('/')
 def home():
     all_cafes = db.session.query(Cafe).all()
@@ -81,25 +106,79 @@ def add_cafe():
             can_take_calls_bool = True
         else:
             can_take_calls_bool = False
-        new_cafe = Cafe(name = form.name.data,
-                        map_url = form.map_url.data,
-                        img_url = form.img_url.data,
-                        location = form.location.data,
-                        has_sockets = has_sockets_bool,
-                        has_toilet = has_toilet_bool,
-                        has_wifi = has_wifi_bool,
-                        can_take_calls = can_take_calls_bool,
-                        seats = form.seats.data,
-                        coffee_price = form.coffee_price.data)
+        new_cafe = Cafe(name=form.name.data,
+                        map_url=form.map_url.data,
+                        img_url=form.img_url.data,
+                        location=form.location.data,
+                        has_sockets=has_sockets_bool,
+                        has_toilet=has_toilet_bool,
+                        has_wifi=has_wifi_bool,
+                        can_take_calls=can_take_calls_bool,
+                        seats=form.seats.data,
+                        coffee_price=form.coffee_price.data)
         db.session.add(new_cafe)
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('add.html', form=form)
 
 
-# all_cafes = db.session.query(Cafe).all()
-# for cafe in all_cafes:
-#     print(cafe.has_sockets)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('home'))
+            else:
+                error = 'Password incorrect, please try again.'
+        else:
+            error = 'That email does not exist, please try again.'
+    return render_template('login.html', error=error)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    error = None
+    if request.method == 'POST':
+        if User.query.filter_by(email=request.form.get('email')).first():
+            error = "You've already signed up with that email, log in instead."
+        else:
+            # Hash the users password before storing in database
+            hash_password = generate_password_hash(request.form.get('password'),
+                                                   method='pbkdf2:sha256',
+                                                   salt_length=8)
+            new_user = User(email=request.form.get('email'),
+                            password=hash_password,
+                            name=request.form.get('name'))
+            db.session.add(new_user)
+            db.session.commit()
+            # Login the new user to work with authentication
+            login_user(new_user)
+            return redirect(url_for('home'))
+    return render_template('register.html', error=error)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+# Create Admin User
+# db.create_all()
+# admin_password = generate_password_hash(
+#     'abcd1234', method='pbkdf2:sha256', salt_length=8)
+# admin_user = User(email='admin@admin.com',
+#                   password=admin_password,
+#                   name='Admin')
+# db.session.add(admin_user)
+# db.session.commit()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     # app.run()

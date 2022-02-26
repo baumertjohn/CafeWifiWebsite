@@ -46,8 +46,15 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li> -->
             </ul>
+            {% if current_user.is_authenticated: %}
+            <span style="color:white; ">Hello {{ current_user.name }}</span>
             <a class="nav-link" href="{{ url_for('add_cafe') }}">Add Cafe</a>
+            {% endif %}
             <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-            <a class="nav-link" href="#">Log In</a>
+            {% if not current_user.is_authenticated: %}
+            <a class="nav-link" href="{{ url_for('login') }}">Log In / Register</a>
+            {% else: %}
+            <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            {% endif %} 
         </div>
     </nav>

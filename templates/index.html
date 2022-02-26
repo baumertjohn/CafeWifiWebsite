@@ -1,10 +1,13 @@
 {% set title = 'Nomad Workplace Finder' %}
 {% include "header.html" %}
 <!-- Page Header -->
-<div style="width:90%; margin:0 auto; text-align:center;">
+<div style="width:80%; margin:0 auto; text-align:center;">
     <!-- Nav Bar -->
+    <h1>Welcome to the Nomad Workplace Finder</h1>
+    <br>
+    <h5>Browse the current listings or <a href="{{ url_for('login') }}">Login / Register</a> to add your own.</h5>
+    <br>
     <div class="container-fluid">
-
         <!-- Cafe list -->
         <div class="card-columns">
             <!-- <div class="row"> -->
@@ -41,7 +44,9 @@
         </div>
     </div>
 </div>
+{% if current_user.is_authenticated: %}
 <div style="padding: 25px; text-align: center;">
     <a href="{{url_for('add_cafe')}}" class="btn btn-primary">Add a New Cafe</a>
 </div>
+{% endif %}
 {% include "footer.html" %}
