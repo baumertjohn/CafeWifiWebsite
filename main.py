@@ -1,8 +1,16 @@
-# A simple cafe ammenity listing website
-# Admin user credentials are:
+# A simple cafe amenity listing website
+
+# Admin user credentials:
 # name: Admin
 # email: admin@admin.com
 # password: 12345678
+# Can ADD or DELETE cafe data
+
+# Test user credentials:
+# name: New Person
+# email: test@email.com
+# password: 1234
+# Can ADD cafe data
 
 from flask import Flask, redirect, render_template, request, url_for
 from flask_bootstrap import Bootstrap
@@ -10,7 +18,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField
 from wtforms.validators import DataRequired, URL
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 CAFE_BOOLEANS = ['YES', 'NO']
@@ -168,15 +176,17 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# Create Admin User
-# db.create_all()
-# admin_password = generate_password_hash(
-#     'abcd1234', method='pbkdf2:sha256', salt_length=8)
-# admin_user = User(email='admin@admin.com',
-#                   password=admin_password,
-#                   name='Admin')
-# db.session.add(admin_user)
-# db.session.commit()
+
+@app.route('/delete/<int:cafe_id>', methods=['GET', 'POST'])
+@login_required
+def delete(cafe_id):
+    if current_user.name == 'Admin':
+        cafe_to_delete = db.session.query(Cafe).get(cafe_id)
+        if request.method == 'POST':
+            db.session.delete(cafe_to_delete)
+            db.session.commit()
+            return redirect(url_for('home'))
+    return render_template('delete.html', cafe=cafe_to_delete.name)
 
 
 if __name__ == '__main__':

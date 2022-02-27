@@ -1,0 +1,15 @@
+{% set title = 'Delete Cafe' %}
+{% include 'header.html' %}
+<!-- Page Header -->
+<div class="short_content" style="width:50%; margin:0 auto; text-align:center;">
+    <div class="alert alert-danger">
+        Are you sure you want to delete {{ cafe }}?
+    </div>
+    <div>
+        <form action="" method="post">
+            <button type="submit" class="btn btn-primary">CONFIRM</button>
+        </form>
+    </div>
+</div>
+<!-- Page Footer -->
+{% include 'footer.html' %}
